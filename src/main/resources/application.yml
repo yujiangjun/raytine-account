@@ -1,0 +1,8 @@
+logging:
+  config: classpath:log4j2.xml
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://8.134.34.84:3306/raytine_account?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
