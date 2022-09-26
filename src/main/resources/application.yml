@@ -1,8 +1,19 @@
+#raytine_account_salt为自定义加密盐：（jasypt配置一定要放最上面）
+#加密方式  (切勿修改，若修改：同加密方法一并修改。)
+jasypt:
+  encryptor:
+    password: raytine_account_salt
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    algorithm: PBEWithMD5AndDES
 logging:
   config: classpath:log4j2.xml
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://8.134.34.84:3306/raytine_account?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
+    username: ENC(/gN4I7nj74eFmm/akU7+uA==)
+    password: ENC(pYF+Cpl3jBGAKz2EUxvR+A==)
+# 默认加密方式PBEWithMD5AndDES,可以更改为PBEWithMD5AndTripleDES
+# jasypt.encryptor.algorithm=PBEWithMD5AndDES
+#为了防止密钥泄露,反解出密码.可以在项目部署的时候使用命令传入密钥值
+#或者在服务器的环境变量里配置,进一步提高安全性
