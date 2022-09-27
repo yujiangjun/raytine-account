@@ -25,11 +25,14 @@ repositories {
 }
 
 dependencies {
+    implementation("com.auth0:java-jwt:3.8.3")
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4")
+    implementation("cn.hutool:hutool-all:5.8.8")
     implementation("com.lmax:disruptor:3.4.4")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("mysql:mysql-connector-java:8.0.30")
     implementation("com.baomidou:mybatis-plus-boot-starter:3.5.2")
     compileOnly("org.projectlombok:lombok")
