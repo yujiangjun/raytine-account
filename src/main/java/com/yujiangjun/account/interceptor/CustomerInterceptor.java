@@ -19,10 +19,10 @@ import java.io.PrintWriter;
 
 public class CustomerInterceptor implements HandlerInterceptor {
 
-    private final RedisTemplate<String, Account> redisTemplate = SpringContextUtil.getBean(RedisTemplate.class);
     private final CurrentUser currentUser = SpringContextUtil.getBean(CurrentUser.class);
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+     RedisTemplate<String, Account> redisTemplate = SpringContextUtil.getBean(RedisTemplate.class);
         String token = request.getHeader("token");
 
         Resp<Void> resp;

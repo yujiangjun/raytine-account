@@ -14,7 +14,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 // 需要拦截的请求
                 .addPathPatterns("/account/**")
                 // 需要放行的请求
-                .excludePathPatterns("/accout/UserLogin")
+                .excludePathPatterns("/account/login")
         // 添加swagger-ui的放行路径
 //                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**","/doc.html/**")
         ;

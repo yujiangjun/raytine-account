@@ -45,3 +45,4 @@ bin/
 /gradle/
 /account/
 /.idea/
+/src/main/resources/rebel.xml

@@ -46,7 +46,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         Account account = getOne(queryWrapper);
 
         String token = JwtUtil.getToken(String.valueOf(account.getId()),encryptPass);
-        redisTemplate.boundValueOps(String.valueOf(account.getId())).set(account,7, TimeUnit.DAYS);
+        redisTemplate.boundValueOps(token).set(account,7, TimeUnit.DAYS);
         currentUser.setUser(account);
         return token;
     }
