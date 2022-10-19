@@ -10,11 +10,11 @@ logging:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/raytine_account?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://mysql:3306/raytine_account?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Shanghai
     username: ENC(/gN4I7nj74eFmm/akU7+uA==)
     password: ENC(pYF+Cpl3jBGAKz2EUxvR+A==)
   redis:
-    host: localhost
+    host: redis
     port: 6379
     database: 1
     password: 123456
