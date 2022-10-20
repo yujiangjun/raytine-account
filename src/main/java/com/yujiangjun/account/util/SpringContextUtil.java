@@ -27,12 +27,16 @@ public class SpringContextUtil implements ApplicationContextAware {
     //获取Bean
     public static <T> T getBean(Class<T> requiredType){
         //assertContextInjected();
-        return (T) getApplicationContext().getBean(requiredType);
+        return getApplicationContext().getBean(requiredType);
     }
     @SuppressWarnings("unchecked")
     public static <T> T getBean(String name){
         assertContextInjected();
         return (T) getApplicationContext().getBean(name);
+    }
+
+    public static <T> T getBean(Class<T> clazz,String beanName){
+        return getApplicationContext().getBean(beanName,clazz);
     }
     //判断application是否为空
     public static void assertContextInjected(){

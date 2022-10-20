@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yujiangjun.account.mapper.FriendShipMapper">
+  <resultMap id="BaseResultMap" type="com.yujiangjun.account.model.FriendShip">
+    <!--@mbg.generated-->
+    <!--@Table friend_ship-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="friend_id" jdbcType="INTEGER" property="friendId" />
+    <result column="my_id" jdbcType="INTEGER" property="myId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, friend_id, my_id
+  </sql>
+</mapper>

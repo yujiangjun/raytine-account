@@ -10,6 +10,7 @@ import com.yujiangjun.account.util.JwtUtil;
 import com.yujiangjun.account.util.SpringContextUtil;
 import com.yujiangjun.account.vo.Resp;
 import com.yujiangjun.account.vo.RespFactory;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -21,16 +22,16 @@ public class CustomerInterceptor implements HandlerInterceptor {
 
     private final CurrentUser currentUser = SpringContextUtil.getBean(CurrentUser.class);
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-     RedisTemplate<String, Account> redisTemplate = SpringContextUtil.getBean(RedisTemplate.class);
+    public boolean preHandle(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
+     RedisTemplate<String, Account> redisTemplate = SpringContextUtil.getBean(RedisTemplate.class,"redisTemplate");
         String token = request.getHeader("token");
 
         Resp<Void> resp;
         // 捕获刚刚JWT中抛出的异常,并封装对应的返回信息
         try {
             String userId = JwtUtil.verify(token,"account");
-            Account account = redisTemplate.boundValueOps(userId).get();
-            if (account !=null){
+            if (userId !=null){
+                Account account = redisTemplate.boundValueOps(token).get();
                 if (currentUser.getUser()==null) {
                     currentUser.setUser(account);
                 }
