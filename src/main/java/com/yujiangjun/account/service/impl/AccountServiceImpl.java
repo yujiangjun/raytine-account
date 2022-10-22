@@ -24,14 +24,11 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
 
     private final RedisTemplate<String,Account> redisTemplate;
 
-    private final CurrentUser currentUser;
-
     @Value("${jwt.encryptPass}")
     private String encryptPass;
 
-    public AccountServiceImpl(RedisTemplate<String, Account> redisTemplate, CurrentUser currentUser) {
+    public AccountServiceImpl(RedisTemplate<String, Account> redisTemplate) {
         this.redisTemplate = redisTemplate;
-        this.currentUser = currentUser;
     }
 
     @Override
@@ -49,7 +46,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
 
         String token = JwtUtil.getToken(String.valueOf(account.getId()),encryptPass);
         redisTemplate.boundValueOps(token).set(account,7, TimeUnit.DAYS);
-        currentUser.setUser(account);
+        CurrentUser.setUser(account);
         AccountTokenVo tokenVo = BeanUtil.copyProperties(account, AccountTokenVo.class);
         tokenVo.setToken(token);
         return tokenVo;

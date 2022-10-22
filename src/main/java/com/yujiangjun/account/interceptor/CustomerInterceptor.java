@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 
 public class CustomerInterceptor implements HandlerInterceptor {
 
-    private final CurrentUser currentUser = SpringContextUtil.getBean(CurrentUser.class);
     @Override
     public boolean preHandle(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
      RedisTemplate<String, Account> redisTemplate = SpringContextUtil.getBean(RedisTemplate.class,"redisTemplate");
@@ -32,8 +31,8 @@ public class CustomerInterceptor implements HandlerInterceptor {
             String userId = JwtUtil.verify(token,"account");
             if (userId !=null){
                 Account account = redisTemplate.boundValueOps(token).get();
-                if (currentUser.getUser()==null) {
-                    currentUser.setUser(account);
+                if (CurrentUser.getUser()==null) {
+                    CurrentUser.setUser(account);
                 }
                 return true;
             }
@@ -47,7 +46,7 @@ public class CustomerInterceptor implements HandlerInterceptor {
         }catch (Exception e){
             resp = RespFactory.createVoidResp(ExceptionEnum.IDENTITY_INFORMATION_IS_INVALID.getCode(), ExceptionEnum.IDENTITY_INFORMATION_IS_INVALID.getMessage());
         }
-        currentUser.unload();
+        CurrentUser.unload();
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         writer.print(resp);

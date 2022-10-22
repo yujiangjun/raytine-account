@@ -22,7 +22,7 @@ public class FriendShipServiceImpl extends ServiceImpl<FriendShipMapper, FriendS
 
     @Override
     public List<Account> getMyFriends() {
-        Account current = SpringContextUtil.getBean(CurrentUser.class).getUser();
+        Account current = CurrentUser.getUser();
         LambdaQueryWrapper<FriendShip> queryWrapper = new QueryWrapper<FriendShip>().lambda().eq(FriendShip::getMyId, current.getId());
         List<FriendShip> shipList = list(queryWrapper);
         if (CollectionUtil.isEmpty(shipList)){
