@@ -1,5 +1,6 @@
 package com.yujiangjun.account.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,6 +12,7 @@ import com.yujiangjun.account.model.Account;
 import com.yujiangjun.account.service.AccountService;
 import com.yujiangjun.account.util.JwtUtil;
 import com.yujiangjun.account.vo.AccountLoginVo;
+import com.yujiangjun.account.vo.AccountTokenVo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -33,7 +35,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
 
     @Override
-    public String login(AccountLoginVo loginVo) {
+    public AccountTokenVo login(AccountLoginVo loginVo) {
         LambdaQueryWrapper<Account> queryWrapper = new QueryWrapper<Account>().lambda().eq(Account::getUserCode, loginVo.getUserCode());
         if (count(queryWrapper)==0){
             throw new LoginException(ExceptionEnum.ACCOUNT_NOT_EXIST);
@@ -48,6 +50,8 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         String token = JwtUtil.getToken(String.valueOf(account.getId()),encryptPass);
         redisTemplate.boundValueOps(token).set(account,7, TimeUnit.DAYS);
         currentUser.setUser(account);
-        return token;
+        AccountTokenVo tokenVo = BeanUtil.copyProperties(account, AccountTokenVo.class);
+        tokenVo.setToken(token);
+        return tokenVo;
     }
 }
