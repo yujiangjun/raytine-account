@@ -10,6 +10,7 @@ import com.yujiangjun.account.util.JwtUtil;
 import com.yujiangjun.account.util.SpringContextUtil;
 import com.yujiangjun.account.vo.Resp;
 import com.yujiangjun.account.vo.RespFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-
+@Slf4j
 public class CustomerInterceptor implements HandlerInterceptor {
 
     @Override
@@ -28,9 +29,11 @@ public class CustomerInterceptor implements HandlerInterceptor {
         Resp<Void> resp;
         // 捕获刚刚JWT中抛出的异常,并封装对应的返回信息
         try {
+            log.info("token:{}",token);
             String userId = JwtUtil.verify(token,"account");
             if (userId !=null){
                 Account account = redisTemplate.boundValueOps(token).get();
+                log.info("account:{}",account);
                 if (CurrentUser.getUser()==null) {
                     CurrentUser.setUser(account);
                 }

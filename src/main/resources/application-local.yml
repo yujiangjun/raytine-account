@@ -27,4 +27,6 @@ mybatis-plus:
 # 默认加密方式PBEWithMD5AndDES,可以更改为PBEWithMD5AndTripleDES
 # jasypt.encryptor.algorithm=PBEWithMD5AndDES
 #为了防止密钥泄露,反解出密码.可以在项目部署的时候使用命令传入密钥值
+server:
+  port: 8889
 #或者在服务器的环境变量里配置,进一步提高安全性
