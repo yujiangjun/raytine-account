@@ -76,7 +76,17 @@
             <appender-ref ref="RollingFileWarn"/>
             <appender-ref ref="RollingFileError"/>
         </logger>
-        <logger name="com.zaxxer.hikari.pool" level="ERROR">
+        <logger name="io.lettuce" level="INFO">
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+        </logger>
+        <logger name="io.netty" level="INFO">
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+        </logger>
+        <logger name="com.zaxxer" level="ERROR">
             <appender-ref ref="RollingFileError"/>
         </logger>
         <!-- Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出 -->

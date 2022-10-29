@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +34,6 @@ public class CustomerInterceptor implements HandlerInterceptor {
             String userId = JwtUtil.verify(token,"account");
             if (userId !=null){
                 Account account = redisTemplate.boundValueOps(token).get();
-                log.info("account:{}",account);
                 if (CurrentUser.getUser()==null) {
                     CurrentUser.setUser(account);
                 }
@@ -56,5 +56,10 @@ public class CustomerInterceptor implements HandlerInterceptor {
         writer.flush();
         writer.close();
         return false;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        CurrentUser.unload();
     }
 }
